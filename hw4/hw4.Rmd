@@ -1,0 +1,111 @@
+---
+title: "HW4"
+author: "Ben Gaudiosi"
+date: "February 21, 2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,messages = FALSE)
+```
+
+##10.5
+###1.
+```{r}
+suppressMessages(library('tidyverse'))
+mtcars
+class(mtcars)
+class(as_tibble(mtcars))
+```
+While regular data frames only have class dataframe, tibbles also have class tbl_df and tbl.
+
+###2
+```{r}
+df <- data.frame(abc = 1, xyz = "a")
+df$x
+df[, "xyz"]
+df[, c("abc", "xyz")]
+
+t <- as_tibble(data.frame(abc = 1, xyz = "a"))
+t$x
+t[, "xyz"]
+t[, c("abc", "xyz")]
+```
+You can see that df$x actually gave us df$xyz, where as t$x did not.
+
+###3
+```{r}
+var <- "mpg"
+df[[var]]
+```
+
+###4
+```{r}
+annoying <- tibble(
+  `1` = 1:10,
+  `2` = `1` * 2 + rnorm(length(`1`))
+)
+
+annoying[['1']]
+ggplot(annoying, aes(x = `1`, y = `2`)) +
+  geom_point()
+
+annoying[['3']] <- annoying[['2']] / annoying[['1']]
+annoying <- rename(annoying, one = `1`, two = `2`, three = `3`)
+```
+
+###5
+It converts tibbles to a dataframe.
+
+###6
+n_extra
+
+##12.6.1
+```{r}
+who1 <- who %>%
+  gather(new_sp_m014:newrel_f65, key = "key", value = "cases", na.rm = TRUE)
+glimpse(who1)
+
+who2 <- who1 %>%
+ mutate(key = stringr::str_replace(key, "newrel", "new_rel"))
+
+who3 <- who2 %>%
+  separate(key, c("new", "type", "sexage"), sep = "_")
+who3
+
+who3 %>%
+  count(new)
+
+who4 <- who3 %>%
+  select(-new, -iso2, -iso3)
+
+who5 <- who4 %>%
+  separate(sexage, c("sex", "age"), sep = 1)
+who5
+
+```
+###1
+This seems reasonable, as no values are missing.
+
+###2
+You get 
+Error in stri_replace_first_regex(string, pattern, fix_replacement(replacement),  : 
+  object 'key' not found
+
+###3
+```{r}
+select(who3, country, iso2, iso3) %>%
+  distinct() %>%
+  group_by(country) %>%
+  filter(n() > 1)
+```
+  
+###4
+```{r}
+who5 %>%
+  group_by(country, year, sex) %>%
+  summarize(cases = sum(cases)) %>%
+  unite(country_sex, country, sex, remove = FALSE) %>%
+  ggplot(aes(x = year, y = cases, group = country_sex, colour = sex)) +
+  geom_line()
+```
