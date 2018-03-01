@@ -10,58 +10,15 @@ knitr::opts_chunk$set(echo = TRUE,messages = FALSE)
 ```
 
 ##10.5
-###1.
-```{r}
-suppressMessages(library('tidyverse'))
-mtcars
-class(mtcars)
-class(as_tibble(mtcars))
-```
-While regular data frames only have class dataframe, tibbles also have class tbl_df and tbl.
-
-###2
-```{r}
-df <- data.frame(abc = 1, xyz = "a")
-df$x
-df[, "xyz"]
-df[, c("abc", "xyz")]
-
-t <- as_tibble(data.frame(abc = 1, xyz = "a"))
-t$x
-t[, "xyz"]
-t[, c("abc", "xyz")]
-```
-You can see that df$x actually gave us df$xyz, where as t$x did not.
-
-###3
-```{r}
-var <- "mpg"
-df[[var]]
-```
-
-###4
-```{r}
-annoying <- tibble(
-  `1` = 1:10,
-  `2` = `1` * 2 + rnorm(length(`1`))
-)
-
-annoying[['1']]
-ggplot(annoying, aes(x = `1`, y = `2`)) +
-  geom_point()
-
-annoying[['3']] <- annoying[['2']] / annoying[['1']]
-annoying <- rename(annoying, one = `1`, two = `2`, three = `3`)
-```
 
 ###5
-It converts tibbles to a dataframe.
+It converts tibbles to a dataframe. You may want to use this with legacy code or if you want to flatten data into a dataframe for any other purpose.
 
-###6
-n_extra
 
 ##12.6.1
 ```{r}
+suppressMessages(library(tidyverse))
+
 who1 <- who %>%
   gather(new_sp_m014:newrel_f65, key = "key", value = "cases", na.rm = TRUE)
 glimpse(who1)
@@ -84,13 +41,7 @@ who5 <- who4 %>%
 who5
 
 ```
-###1
-This seems reasonable, as no values are missing.
 
-###2
-You get 
-Error in stri_replace_first_regex(string, pattern, fix_replacement(replacement),  : 
-  object 'key' not found
 
 ###3
 ```{r}
@@ -108,4 +59,64 @@ who5 %>%
   unite(country_sex, country, sex, remove = FALSE) %>%
   ggplot(aes(x = year, y = cases, group = country_sex, colour = sex)) +
   geom_line()
+```
+
+##table 4 -> table 6
+```{r}
+library(foreign)
+library(stringr)
+library(plyr)
+library(reshape2)
+pew <- read.spss("pew.sav")
+pew <- as.data.frame(pew)
+
+
+religion <- pew[c("q16", "reltrad", "income")]
+religion$reltrad <- as.character(religion$reltrad)
+religion$reltrad <- str_replace(religion$reltrad, " Churches", "")
+religion$reltrad <- str_replace(religion$reltrad, " Protestant", " Prot")
+religion$reltrad[religion$q16 == " Atheist (do not believe in God) "] <- "Atheist"
+religion$reltrad[religion$q16 == " Agnostic (not sure if there is a God) "] <- "Agnostic"
+religion$reltrad <- str_trim(religion$reltrad)
+religion$reltrad <- str_replace_all(religion$reltrad, " \\(.*?\\)", "")
+
+religion$income <- c("Less than $10,000" = "<$10k", 
+  "10 to under $20,000" = "$10-20k", 
+  "20 to under $30,000" = "$20-30k", 
+  "30 to under $40,000" = "$30-40k", 
+  "40 to under $50,000" = "$40-50k", 
+  "50 to under $75,000" = "$50-75k",
+  "75 to under $100,000" = "$75-100k", 
+  "100 to under $150,000" = "$100-150k", 
+  "$150,000 or more" = ">150k", 
+  "Don't know/Refused (VOL)" = "Don't know/refused")[religion$income]
+
+religion$income <- factor(religion$income, levels = c("<$10k", "$10-20k", "$20-30k", "$30-40k", "$40-50k", "$50-75k", 
+  "$75-100k", "$100-150k", ">150k", "Don't know/refused"))
+
+counts <- count(religion, c("reltrad", "income"))
+names(counts)[1] <- "religion"
+
+# Convert into the form in which I originally saw it -------------------------
+
+raw <- dcast(counts, religion ~ income)
+unordered <- raw %>% gather(key='Income',value='Frequency', 2:11)
+fixed <- unordered %>% arrange(religion)
+raw
+head(fixed, 20)
+```
+##table 7 -> table 8
+```{r}
+bb <- read_csv("billboard.csv")
+bb.1 <- bb %>% gather(key="week", value = "rank", -year, -artist.inverted, -track, -time, -genre, -date.entered, -date.peaked)
+bb.2 <- bb.1 %>% select(year, artist=artist.inverted, time, track, date = date.entered, week, rank )
+bb.3 <- bb.2 %>% arrange(track)
+bb.4 <- bb.3 %>% filter(!is.na(rank))
+bb.5 <- bb.4 %>% separate(week, into=c("A", "B", "C"), sep=c(1, -7), convert=TRUE)
+bb.6 <- bb.5 %>% select(-A, -C)
+bb.7 <- bb.6 %>%   dplyr::rename(week = B)
+bb.8 <- bb.7 %>% arrange(artist, track)
+bb.9 <- bb.8 %>% mutate(date = date + (week-1)*7 )
+bb.10 <- bb.9 %>% mutate(rank = as.integer(rank))
+head(bb.10, 20)
 ```
