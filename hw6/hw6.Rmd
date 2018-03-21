@@ -1,0 +1,63 @@
+---
+title: "Mapping Bude"
+author: "Ben Gaudiosi"
+output: pdf_document
+latex_engine: xelatex 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Bude, UK
+\includegraphics{img/map.png}
+
+## Bude, UK in watercolor
+\includegraphics{img/map_watercolor.png}
+
+### Crooklet's Beach
+
+\includegraphics{img/crooklets-beach.jpg}
+
+
+Although a little pebbly at the top, Crooklets offers a huge expanse of golden sand and rock pools to explore once the tide is out. It is popular with surfers, but also families who would prefer a beach without dogs.
+
+There are lots of beach huts available to hire.
+
+Ideal for: Surfing and beach games.
+Accessibility: A decent sized car park, from which there is level access.
+Facilities: Sea front café, public toilets, outdoor shower, beach huts for hire
+Lifeguard Cover: 6th May to 27th September (daily)
+Best time to surf: All tides
+Dog Friendly? Dogs banned Easter to 1st Oct.
+Location: EX23 8NF – 0.8 miles north of Bude Town centre
+
+Source: https://www.visitbude.info/for-beach-lovers/beaches/crooklets-beach/
+
+### Summersleaze Beach
+
+\includegraphics{img/summersleaze-beach.jpg}
+
+Summerleaze has a unique appeal, not least because it is less than five minutes’ walk from the centre of Bude and the large car park leads directly to the sand dunes. The river, with its bobbing fishing boats, flanks the wide, sandy beach that is sheltered by the impressive breakwater, making the beach particularly popular with families and surfers. Beach Huts are bookable daily or weekly from 10 - 20 euros per day. Contact the Bude Tourist Information Centre on 01288 354240
+
+Source: https://www.visitcornwall.com/beaches/lifeguards-seasonal/north-coast/bude/summerleaze-beach
+
+### Crooklet's Inn
+\includegraphics{img/crooklets-pub.jpg}
+
+The Crooklets Inn is a hostelry with a twist. Renowned for boasting a high quality Italian restaurant, you can expect to sample delicious continental cuisine and beverages from the inn's well stocked cellar. An additional lunchtime menu is also available alongside the Italian to give visitors and extensive selection of dishes. Like many eateries in Cornwall, The Crooklets Inn is passionate about sourcing its ingredients from local Cornish suppliers to guarantee delicious seasonal flavours. Located in Bude on Cornwall's west coast, the nearby beach is ideal for those thrill seekers who enjoy surfing, kayaking and rock climbing amongst many other activities which are in close proximity. A large sun room is ideal for special occasions, but wifi accessibility also makes it an ideal venue for conferences. 
+
+Source: http://www.cornwallguideonline.co.uk/attractions/the-crooklets-inn-bude-437.html
+
+### Bude Cricket Club
+
+\includegraphics{img/bude-cricket.jpg}
+
+ Bude North Cornwall Cricket Club is situated on the clifftops overlooking the Atlantic Ocean, and is quite simply one of the most stunning locations you could ever wish to visit, let alone play cricket at! 
+Bude North Cornwall Cricket Club was founded in 1870. Over the years it has played host to Hockey matches, Tennis, Cricket and even used for Mortar practice in WW2!
+Bude played only friendly matches until the late 1970's, entertaining local and touring sides throughout the summer months. Since joining the Cornwall Cricket League the club has held various league honours and still continues to host touring teams from around the world. 
+Currently the club has three senior sides. The 1st XI play in Cornwall Division 2 and the 2nd XI in Division 4. In addition we have a Sunday league side in the North Devon League Division 4. 
+In 2013 our ageing pavilion (around 100 years old) was demolished and replaced with a fantastic new clubhouse, the ground is now a stunning place to watch cricket as well as play it!  
+
+Source: http://budecc.play-cricket.com/
