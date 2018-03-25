@@ -61,3 +61,159 @@ Currently the club has three senior sides. The 1st XI play in Cornwall Division 
 In 2013 our ageing pavilion (around 100 years old) was demolished and replaced with a fantastic new clubhouse, the ground is now a stunning place to watch cricket as well as play it!  
 
 Source: http://budecc.play-cricket.com/
+
+\pagebreak
+
+## Hotels  
+**By Yue Wu**  
+  
+```{r forked, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggmap)
+library(tidyverse)
+load("hw6/by_YueWu/geocodes.RData")
+ggmap(map) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = cricket, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = pub, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = summersleaze_beach, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = crooklets_beach, color = "black", size = 2
+  ) +  
+  geom_path(
+    aes(x = lon, y = lat), colour = "blue", size = 1,
+    data = route_df, lineend = "round"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Bude Cricket Club"), size =2.5, 
+    data = cricket, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Crooklet's Inn"), size =2.5, 
+    data = pub, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Summersleaze Beach"), size =2.5, 
+    data = summersleaze_beach, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Crooklet's Beach"), size =2.5, 
+    data = crooklets_beach, vjust = -0.5, hjust = 0.5
+  ) +
+  
+  #By Yue Wu
+  geom_point(
+    aes(x = lon, y = lat),
+    data = bh, color = "chocolate", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = sh, color = "chocolate", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = fh, color = "chocolate", size = 2
+  ) +  
+  geom_text(
+    aes(x = lon, y = lat, label = "The Beach At Bude"), size =2, 
+    data = bh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Sunrise Guest House"), size =2, 
+    data = sh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Falcon Hotel"), size =2, 
+    data = fh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  )
+```
+**Road Map with Hotels**
+  
+
+```{r forked2, echo=FALSE, message=FALSE, warning=FALSE}
+ggmap(map2) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = cricket, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = pub, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = summersleaze_beach, color = "black", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = crooklets_beach, color = "black", size = 2
+  ) +  
+  geom_path(
+    aes(x = lon, y = lat), colour = "blue", size = 1,
+    data = route_df, lineend = "round"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Bude Cricket Club"), size =2.5, 
+    data = cricket, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Crooklet's Inn"), size =2.5, 
+    data = pub, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Summersleaze Beach"), size =2.5, 
+    data = summersleaze_beach, vjust = -0.5, hjust = 0.5
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Crooklet's Beach"), size =2.5, 
+    data = crooklets_beach, vjust = -0.5, hjust = 0.5
+  ) +
+
+#By Yue Wu
+geom_point(
+  aes(x = lon, y = lat),
+  data = bh, color = "chocolate", size = 2
+) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = sh, color = "chocolate", size = 2
+  ) +
+  geom_point(
+    aes(x = lon, y = lat),
+    data = fh, color = "chocolate", size = 2
+  ) +  
+  geom_text(
+    aes(x = lon, y = lat, label = "The Beach At Bude"), size =2, 
+    data = bh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "Sunrise Guest House"), size =2, 
+    data = sh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  ) +
+  geom_text(
+    aes(x = lon, y = lat, label = "The Falcon Hotel"), size =2, 
+    data = fh, vjust = -0.8, hjust = 0.5, color= "burlywood4"
+  )
+
+```
+**Watercolor Map**  
+  
+####The Beach At Bude
+![Beach at Bude](https://www.london-unattached.com/wp-content/uploads/2017/09/The-Beach-Hotel-Bude-760x530.jpg){width=80%}  
+Overlooking Summerleaze Beach, this boutique hotel in a Victorian building is 50 metres from the Southwest Coast Path walking trail and a 5-minute walk from the Bude Sea Pool.  
+
+####Sunrise Guest House
+![Sunrise Guest House](https://t-ec.bstatic.com/images/hotel/max1024x768/130/130122542.jpg){width=90%}  
+Set in a townhouse across the road from Bude and North Cornwall Golf Club, this laid-back guesthouse is 7 minutes' walk from Summerleaze Beach and a 9-minute walk from dining options in the town centre.  
+
+####The Falcon Hotel
+![Falcon Hotel](https://www.businesscornwall.co.uk/wp-content/uploads/2016/03/falcon.jpg)  
+Overlooking Bencoolen Bridge over the Bude Canal, this refined hotel in a circa-1798 building is 5 minutes' walk from Bude Castle and the town centre, and 7 minutes' walk from Summerleaze Beach.
