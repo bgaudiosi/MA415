@@ -1,24 +1,11 @@
-library(janeaustenr)
 library(dplyr)
 library(stringr)
 library(tidytext)
-library(ggplot2)
-library(wordcloud)
 
-lbj <- as.data.frame(read_lines("./LBJ first state of the union.txt"))
-
-colnames(lbj) = "text"
-lbj %>% filter(nchar)
-lbj
-
-tidy_books <- austen_books() %>%
-  mutate(linenumber = row_number(),
-         chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", 
-                                                 ignore_case = TRUE)))) %>%
-  ungroup() %>%
-  unnest_tokens(word, text)
-
-tidy_books
+lbj <- data_frame(president="lbj", text = read_lines("./LBJ first state of the union.txt"))
+ford <- data_frame(president="ford", text = read_lines("./Ford first state of the union.txt"))
+presidents <- rbind(lbj, ford)
+tidy_presidents <- presidents %>% unnest_tokens(word, text)
 
 nrc_joy <- get_sentiments("nrc") %>% 
   filter(sentiment == "joy")
@@ -29,35 +16,39 @@ nrc_anger <- get_sentiments("nrc") %>%
 nrc_anticipation <- get_sentiments("nrc") %>% 
   filter(sentiment == "anticipation")
 
-tidy_books %>%
-  filter(book == "Emma") %>%
+lbj_joy <- tidy_presidents %>%
+  filter(president == "lbj") %>%
   inner_join(nrc_joy) %>%
   count(word, sort = TRUE)
 
-tidy_books %>%
-  filter(book == "Emma") %>%
+lbj_anger <- tidy_presidents %>%
+  filter(president == "lbj") %>%
   inner_join(nrc_anger) %>%
   count(word, sort = TRUE)
 
-tidy_books %>%
-  filter(book == "Emma") %>%
+lbj_anticipation <- tidy_presidents %>%
+  filter(president == "lbj") %>%
   inner_join(nrc_anticipation) %>%
   count(word, sort = TRUE)
 
-jane_austen_sentiment <- tidy_books %>%
+ford_joy <- tidy_presidents %>%
+  filter(president == "ford") %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+ford_anger <- tidy_presidents %>%
+  filter(president == "ford") %>%
+  inner_join(nrc_anger) %>%
+  count(word, sort = TRUE)
+
+ford_anticipation <- tidy_presidents %>%
+  filter(president == "ford") %>%
+  inner_join(nrc_anticipation) %>%
+  count(word, sort = TRUE)
+
+president_sentiment <- tidy_presidents %>%
   inner_join(get_sentiments("bing")) %>%
-  count(book, index = linenumber %/% 80, sentiment) %>%
+  count(president, sentiment) %>%
   spread(sentiment, n, fill = 0) %>%
   mutate(sentiment = positive - negative)
 
-jane_austen_sentiment
-ggplot(jane_austen_sentiment, aes(index, sentiment, fill = book)) +
-  geom_col(show.legend = FALSE) +
-  facet_wrap(~book, ncol = 2, scales = "free_x")
-
-
-
-tidy_books %>%
-  anti_join(stop_words) %>%
-  count(word) %>%
-  with(wordcloud(word, n, max.words = 100))
